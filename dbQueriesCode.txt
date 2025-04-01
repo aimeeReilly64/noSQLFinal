@@ -1,0 +1,102 @@
+use aimee_final
+
+// 1. InsertOne – Add a new vendor
+db.vendors.insertOne({
+  _id: 11,
+  name: "Tina Lopez",
+  phone: "647-555-2222",
+  email: "tina@example.com",
+  startDate: ISODate("2025-03-29"),
+  isLocal: true
+})
+
+// 2. InsertMany – Add multiple sales records
+db.sales.insertMany([
+  { _id: 1011, productId: 105, saleDate: ISODate("2025-03-29"), quantity: 2 },
+  { _id: 1012, productId: 109, saleDate: ISODate("2025-03-29"), quantity: 5 }
+])
+
+// 3. Find – Retrieve all local vendors
+db.vendors.find({ isLocal: true })
+
+// 4. Find with Projection – Show only name and email
+db.vendors.find({}, { name: 1, email: 1, _id: 0 })
+
+// 5. UpdateOne – Update a single vendor’s phone number
+db.vendors.updateOne(
+  { _id: 2 },
+  { $set: { phone: "647-555-8899" } }
+)
+
+// 6. UpdateMany – Add a 'legacyVendor' flag to older vendors
+db.vendors.updateMany(
+  { startDate: { $lt: ISODate("2023-01-01") } },
+  { $set: { legacyVendor: true } }
+)
+
+// 7. DeleteOne – Remove a specific product
+db.products.deleteOne({ _id: 110 })
+
+// 8. DeleteMany – Remove all products out of stock
+db.products.deleteMany({ inStock: { $lte: 0 } })
+
+// 9. Aggregation – Total quantity sold per product
+db.sales.aggregate([
+  { $group: { _id: "$productId", totalSold: { $sum: "$quantity" } } },
+  { $sort: { totalSold: -1 } }
+])
+
+// 10. Aggregation – Count of products per vendor
+db.products.aggregate([
+  { $group: { _id: "$vendorId", count: { $sum: 1 } } },
+  { $sort: { count: -1 } }
+])
+
+// 11. Sort – Products by price descending
+db.products.find().sort({ price: -1 })
+
+// 12. Indexing – Create index on vendorId
+db.products.createIndex({ vendorId: 1 })
+
+// 13. Text Search – Find vendor by name
+db.vendors.createIndex({ name: "text" })
+db.vendors.find({ $text: { $search: "Clara" } })
+
+// 14. Regex Query – Products with “knife” in name
+db.products.find({ name: { $regex: /knife/i } })
+
+// 15. Transaction – Insert vendor and rental agreement together
+const session = db.getMongo().startSession()
+session.startTransaction()
+try {
+  session.getDatabase("aimee_final").vendors.insertOne(
+    {
+      _id: 12,
+      name: "Maya Singh",
+      phone: "905-555-4567",
+      email: "maya@example.com",
+      startDate: ISODate("2025-03-29"),
+      isLocal: true
+    },
+    { session }
+  )
+
+  session.getDatabase("aimee_final").rental_agreements.insertOne(
+    {
+      _id: 211,
+      vendorId: 12,
+      rentalSize: "medium",
+      rentFee: 80.00,
+      commissionRate: 0.20,
+      startDate: ISODate("2025-03-29")
+    },
+    { session }
+  )
+
+  session.commitTransaction()
+} catch (e) {
+  session.abortTransaction()
+}
+session.endSession()
+
+

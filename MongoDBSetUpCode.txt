@@ -1,0 +1,329 @@
+use aimeeFinal
+
+db.createCollection("vendors")
+db.createCollection("products")
+db.createCollection("sales")
+db.createCollection("rental_agreements")
+
+db.vendors.insertMany([
+  {
+    _id: 1,
+    name: "Aimee Carter",
+    phone: "416-555-1234",
+    email: "aimee@example.com",
+    startDate: ISODate("2023-04-01"),
+    isLocal: true
+  },
+  {
+    _id: 2,
+    name: "David Stone",
+    phone: "647-555-8877",
+    email: "david@example.com",
+    startDate: ISODate("2024-01-15"),
+    isLocal: false
+  },
+  {
+    _id: 3,
+    name: "Lina Moore",
+    phone: "905-555-2323",
+    email: "lina@example.com",
+    startDate: ISODate("2023-11-10"),
+    isLocal: true
+  },
+  {
+    _id: 4,
+    name: "Jared Beck",
+    phone: "289-555-9191",
+    email: "jared@example.com",
+    startDate: ISODate("2024-03-01"),
+    isLocal: false
+  },
+  {
+    _id: 5,
+    name: "Sophia Lin",
+    phone: "613-555-8787",
+    email: "sophia@example.com",
+    startDate: ISODate("2022-08-22"),
+    isLocal: true
+  },
+  {
+    _id: 6,
+    name: "Noah Ray",
+    phone: "905-555-3344",
+    email: "noah@example.com",
+    startDate: ISODate("2024-02-05"),
+    isLocal: true
+  },
+  {
+    _id: 7,
+    name: "Clara Wells",
+    phone: "416-555-6789",
+    email: "clara@example.com",
+    startDate: ISODate("2023-09-17"),
+    isLocal: false
+  },
+  {
+    _id: 8,
+    name: "Felix Kim",
+    phone: "647-555-2233",
+    email: "felix@example.com",
+    startDate: ISODate("2024-04-10"),
+    isLocal: true
+  },
+  {
+    _id: 9,
+    name: "Rhea Patel",
+    phone: "613-555-1029",
+    email: "rhea@example.com",
+    startDate: ISODate("2022-12-01"),
+    isLocal: true
+  },
+  {
+    _id: 10,
+    name: "Leo Zhang",
+    phone: "905-555-8080",
+    email: "leo@example.com",
+    startDate: ISODate("2023-07-23"),
+    isLocal: false
+  }
+])
+
+db.products.insertMany([
+  {
+    _id: 101,
+    vendorId: 1,
+    name: "Leather Corner Bookmark",
+    category: "Bookmark",
+    material: "Leather",
+    price: 8.00,
+    inStock: 25
+  },
+  {
+    _id: 102,
+    vendorId: 2,
+    name: "Crystal Sun Catcher",
+    category: "Crystal",
+    material: "Quartz",
+    price: 15.00,
+    inStock: 12
+  },
+  {
+    _id: 103,
+    vendorId: 3,
+    name: "Steel Hunting Knife",
+    category: "Knife",
+    material: "Carbon Steel",
+    price: 45.00,
+    inStock: 6
+  },
+  {
+    _id: 104,
+    vendorId: 4,
+    name: "Coin Pouch with Embroidery",
+    category: "Pouch",
+    material: "Leather",
+    price: 20.00,
+    inStock: 10
+  },
+  {
+    _id: 105,
+    vendorId: 5,
+    name: "Polished Amethyst Cluster",
+    category: "Crystal",
+    material: "Amethyst",
+    price: 35.00,
+    inStock: 5
+  },
+  {
+    _id: 106,
+    vendorId: 6,
+    name: "Hand-Carved Wooden Coaster Set",
+    category: "Home Decor",
+    material: "Oak",
+    price: 22.00,
+    inStock: 8
+  },
+  {
+    _id: 107,
+    vendorId: 7,
+    name: "Decorative Resin Keychain",
+    category: "Keychain",
+    material: "Resin",
+    price: 10.00,
+    inStock: 20
+  },
+  {
+    _id: 108,
+    vendorId: 8,
+    name: "Beaded Leather Bracelet",
+    category: "Jewelry",
+    material: "Leather & Beads",
+    price: 18.00,
+    inStock: 15
+  },
+  {
+    _id: 109,
+    vendorId: 9,
+    name: "Tumbled Rose Quartz",
+    category: "Crystal",
+    material: "Rose Quartz",
+    price: 6.00,
+    inStock: 30
+  },
+  {
+    _id: 110,
+    vendorId: 10,
+    name: "Miniature Forged Knife",
+    category: "Knife",
+    material: "Steel",
+    price: 28.00,
+    inStock: 7
+  }
+])
+
+db.sales.insertMany([
+  {
+    _id: 1001,
+    productId: 101,
+    saleDate: ISODate("2025-03-15"),
+    quantity: 2
+  },
+  {
+    _id: 1002,
+    productId: 102,
+    saleDate: ISODate("2025-03-18"),
+    quantity: 1
+  },
+  {
+    _id: 1003,
+    productId: 103,
+    saleDate: ISODate("2025-03-20"),
+    quantity: 1
+  },
+  {
+    _id: 1004,
+    productId: 104,
+    saleDate: ISODate("2025-03-21"),
+    quantity: 3
+  },
+  {
+    _id: 1005,
+    productId: 105,
+    saleDate: ISODate("2025-03-22"),
+    quantity: 1
+  },
+  {
+    _id: 1006,
+    productId: 106,
+    saleDate: ISODate("2025-03-25"),
+    quantity: 2
+  },
+  {
+    _id: 1007,
+    productId: 107,
+    saleDate: ISODate("2025-03-26"),
+    quantity: 5
+  },
+  {
+    _id: 1008,
+    productId: 108,
+    saleDate: ISODate("2025-03-27"),
+    quantity: 1
+  },
+  {
+    _id: 1009,
+    productId: 109,
+    saleDate: ISODate("2025-03-27"),
+    quantity: 3
+  },
+  {
+    _id: 1010,
+    productId: 110,
+    saleDate: ISODate("2025-03-28"),
+    quantity: 1
+  }
+])
+
+db.rental_agreements.insertMany([
+  {
+    _id: 201,
+    vendorId: 1,
+    rentalSize: "small",
+    rentFee: 50.00,
+    commissionRate: 0.20,
+    startDate: ISODate("2023-04-01")
+  },
+  {
+    _id: 202,
+    vendorId: 2,
+    rentalSize: "medium",
+    rentFee: 80.00,
+    commissionRate: 0.20,
+    startDate: ISODate("2024-01-15")
+  },
+  {
+    _id: 203,
+    vendorId: 3,
+    rentalSize: "medium",
+    rentFee: 80.00,
+    commissionRate: 0.20,
+    startDate: ISODate("2023-11-10")
+  },
+  {
+    _id: 204,
+    vendorId: 4,
+    rentalSize: "small",
+    rentFee: 50.00,
+    commissionRate: 0.20,
+    startDate: ISODate("2024-03-01")
+  },
+  {
+    _id: 205,
+    vendorId: 5,
+    rentalSize: "large",
+    rentFee: 120.00,
+    commissionRate: 0.20,
+    startDate: ISODate("2022-08-22")
+  },
+  {
+    _id: 206,
+    vendorId: 6,
+    rentalSize: "small",
+    rentFee: 50.00,
+    commissionRate: 0.20,
+    startDate: ISODate("2024-02-05")
+  },
+  {
+    _id: 207,
+    vendorId: 7,
+    rentalSize: "large",
+    rentFee: 120.00,
+    commissionRate: 0.20,
+    startDate: ISODate("2023-09-17")
+  },
+  {
+    _id: 208,
+    vendorId: 8,
+    rentalSize: "small",
+    rentFee: 50.00,
+    commissionRate: 0.20,
+    startDate: ISODate("2024-04-10")
+  },
+  {
+    _id: 209,
+    vendorId: 9,
+    rentalSize: "medium",
+    rentFee: 80.00,
+    commissionRate: 0.20,
+    startDate: ISODate("2022-12-01")
+  },
+  {
+    _id: 210,
+    vendorId: 10,
+    rentalSize: "large",
+    rentFee: 120.00,
+    commissionRate: 0.20,
+    startDate: ISODate("2023-07-23")
+  }
+])
+
